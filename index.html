@@ -2,21 +2,23 @@
 <html lang="nl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Appie en het Geheim van de Kerststol</title>
-<meta name="robots" content="noindex">
-<script>
-(function () {
-  var mobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) ||
-    (navigator.maxTouchPoints > 1 && /Macintosh/i.test(navigator.userAgent));
-  var destination = mobile
-    ? 'https://antondeheer.github.io/Appie-kerststol-mobiel/'
-    : 'https://antondeheer.github.io/Appie-kerststol/';
-  window.location.replace(destination);
-})();
-</script>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#060d1c}
+iframe{position:fixed;inset:0;width:100%;height:100%;border:0;display:block}
+</style>
 </head>
 <body>
-<p>Het spel wordt geopend. <a href="https://antondeheer.github.io/Appie-kerststol/">Klik hier als dat niet automatisch gebeurt.</a></p>
+<iframe id="spel" title="Appie en het Geheim van de Kerststol" allow="autoplay; fullscreen" allowfullscreen></iframe>
+<script>
+(function(){
+ const mobile=/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)||
+ (navigator.maxTouchPoints>1 && /Macintosh/i.test(navigator.userAgent));
+ document.getElementById('spel').src=mobile
+  ? 'https://antondeheer.github.io/Appie-kerststol-mobiel/'
+  : 'https://antondeheer.github.io/Appie-kerststol/';
+})();
+</script>
 </body>
 </html>
