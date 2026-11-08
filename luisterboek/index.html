@@ -48,7 +48,7 @@ html,body{margin:0;width:100%;height:100%;background:#07162b;color:#fff;font-fam
 const chapters=[
  {title:'Hoofdstuk 1 · Een koude decemberdag',audio:'hoofdstuk1.mp3',first:0,cuts:[0,4.5,16.8,26.3,34.0]},
  // Voorlopige wisselmomenten: na het beluisteren van hoofdstuk 2 nauwkeurig bijstellen.
- {title:'Hoofdstuk 2 · Voor de bakkerij',audio:'Hoofdstuk 2.mp3',first:5,cuts:[0,13,31,52]}
+ {title:'Hoofdstuk 2 · Voor de bakkerij',audio:'Hoofdstuk 2.mp3',first:5,cuts:[0,0.28,0.55,0.79],relative:true}
 ];
 const voice=document.getElementById('voice');
 const imgs=[...document.querySelectorAll('.scene img')];
@@ -65,7 +65,7 @@ function fmt(t){if(!Number.isFinite(t))return '0:00';return Math.floor(t/60)+':'
 function frame(){
  const c=chapters[chapter],t=voice.currentTime||0;
  let idx=0;
- for(let i=0;i<c.cuts.length;i++)if(t>=c.cuts[i])idx=i;
+ for(let i=0;i<c.cuts.length;i++)if(t>=(c.relative && Number.isFinite(voice.duration) ? c.cuts[i]*voice.duration : c.cuts[i]))idx=i;
  const visible=c.first+idx;
  imgs.forEach((im,i)=>im.classList.toggle('active',i===visible));
  seek.value=t;clock.textContent=fmt(t);
@@ -82,7 +82,7 @@ function loadChapter(index,autoplay){
  if(autoplay)voice.play().catch(()=>{toggle.textContent='▶';done.textContent='Tik op afspelen om verder te luisteren';done.style.display='block'});
 }
 voice.addEventListener('loadedmetadata',()=>{
- if(Number.isFinite(voice.duration)){seek.max=voice.duration;duration.textContent=fmt(voice.duration)}
+ if(Number.isFinite(voice.duration)){seek.max=voice.duration;duration.textContent=fmt(voice.duration);frame()}
 });
 voice.addEventListener('timeupdate',frame);
 voice.addEventListener('ended',()=>{
