@@ -1,20 +1,108 @@
-<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Appie en het Geheim van de Kerststol – Hoofdstuk 1</title><style>
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:#07162b;color:#fff;font-family:Georgia,serif;overflow:hidden}.scene{position:absolute;inset:0}.scene img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 1.1s ease;background:#07162b}.scene img.active{opacity:1}.shade{position:absolute;inset:0;background:linear-gradient(transparent 72%,rgba(0,0,0,.58));pointer-events:none}.start{position:absolute;bottom:11%;left:50%;transform:translateX(-50%);background:linear-gradient(#9b2424,#631010);color:#ffe8a7;border:2px solid #e6b75b;border-radius:28px;font:700 clamp(17px,2.6vw,26px) Georgia;padding:15px 30px;cursor:pointer;box-shadow:0 5px 25px #000b;white-space:nowrap}.controls{position:absolute;bottom:2%;left:50%;transform:translateX(-50%);display:none;align-items:center;gap:12px;background:#09172cce;border:1px solid #cba86c88;border-radius:25px;padding:8px 15px;max-width:96%;font-size:14px}.controls button{background:none;color:white;border:0;font-size:22px;cursor:pointer}.controls input{width:min(35vw,280px);accent-color:#f6c56c}.note{position:absolute;top:12px;left:12px;background:#0009;padding:7px 11px;border-radius:8px;font-size:13px}.done{position:absolute;bottom:15%;width:100%;text-align:center;font-size:clamp(18px,3vw,30px);text-shadow:0 2px 9px black;display:none}@media(max-width:650px){.controls{font-size:11px;gap:5px}.controls input{width:23vw}.note{font-size:11px}}
-</style></head><body>
-<div class="scene"><img src="beeld1.jpg" class="active" alt="Titelbeeld"><img src="beeld2.jpg" alt="Appie en Bikkel wandelen door Rotterdam"><img src="beeld3.jpg" alt="Appie gooit een sneeuwbal"><img src="beeld4.jpg" alt="Appie helpt een oude vrouw"><img src="beeld5.jpg" alt="De geur van de bakkerij lokt Appie en Bikkel"></div><div class="shade"></div><div class="note">Hoofdstuk 1 · Een koude decemberdag</div><button class="start" id="start">▶ Start luisterboek</button><div class="controls" id="controls"><button id="toggle" aria-label="Afspelen of pauzeren">⏸</button><span id="clock">0:00</span><input id="seek" type="range" min="0" max="41.736" step="0.05" value="0" aria-label="Voortgang"><span id="duration">0:42</span><button id="again" title="Opnieuw">↺</button></div><div class="done" id="done">Einde hoofdstuk 1 ❄</div><audio id="voice" preload="auto" src="hoofdstuk1.mp3"></audio>
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Appie en het Geheim van de Kerststol – Luisterboek</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;background:#07162b;color:#fff;font-family:Georgia,serif;overflow:hidden}
+.scene{position:absolute;inset:0}
+.scene img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 1.1s ease;background:#07162b}
+.scene img.active{opacity:1}
+.shade{position:absolute;inset:0;background:linear-gradient(transparent 72%,rgba(0,0,0,.58));pointer-events:none}
+.start{position:absolute;bottom:11%;left:50%;transform:translateX(-50%);background:linear-gradient(#9b2424,#631010);color:#ffe8a7;border:2px solid #e6b75b;border-radius:28px;font:700 clamp(17px,2.6vw,26px) Georgia;padding:15px 30px;cursor:pointer;box-shadow:0 5px 25px #000b;white-space:nowrap}
+.controls{position:absolute;bottom:2%;left:50%;transform:translateX(-50%);display:none;align-items:center;gap:12px;background:#09172cce;border:1px solid #cba86c88;border-radius:25px;padding:8px 15px;max-width:96%;font-size:14px}
+.controls button{background:none;color:white;border:0;font-size:22px;cursor:pointer}
+.controls input{width:min(35vw,280px);accent-color:#f6c56c}
+.note{position:absolute;top:12px;left:12px;background:#0009;padding:7px 11px;border-radius:8px;font-size:13px}
+.done{position:absolute;bottom:15%;width:100%;text-align:center;font-size:clamp(18px,3vw,30px);text-shadow:0 2px 9px black;display:none}
+@media(max-width:650px){.controls{font-size:11px;gap:5px}.controls input{width:23vw}.note{font-size:11px}}
+</style>
+</head>
+<body>
+<div class="scene">
+<img src="beeld1.jpg" class="active" alt="Titelbeeld">
+<img src="beeld2.jpg" alt="Appie en Bikkel wandelen door Rotterdam">
+<img src="beeld3.jpg" alt="Appie gooit een sneeuwbal">
+<img src="beeld4.jpg" alt="Appie helpt een oude vrouw">
+<img src="beeld5.jpg" alt="De geur van de bakkerij lokt Appie en Bikkel">
+<img src="beeld6.png" alt="Appie en Bikkel luisteren bij de bakkerij">
+<img src="beeld7.png" alt="Anton mist ingrediënten voor het kerstbrood">
+<img src="beeld8.png" alt="Appie biedt zijn hulp aan">
+<img src="beeld9.png" alt="Anton geeft Appie het boodschappenlijstje">
+</div>
+<div class="shade"></div>
+<div class="note" id="note">Hoofdstuk 1 · Een koude decemberdag</div>
+<button class="start" id="start">▶ Start luisterboek</button>
+<div class="controls" id="controls">
+<button id="toggle" aria-label="Afspelen of pauzeren">⏸</button>
+<span id="clock">0:00</span>
+<input id="seek" type="range" min="0" max="42" step="0.05" value="0" aria-label="Voortgang">
+<span id="duration">0:42</span>
+<button id="again" title="Hoofdstuk opnieuw">↺</button>
+</div>
+<div class="done" id="done">Einde hoofdstuk 2 ❄</div>
+<audio id="voice" preload="auto" src="hoofdstuk1.mp3"></audio>
 <script>
-const voice=document.getElementById('voice'),imgs=[...document.querySelectorAll('.scene img')],start=document.getElementById('start'),controls=document.getElementById('controls'),toggle=document.getElementById('toggle'),seek=document.getElementById('seek'),clock=document.getElementById('clock'),done=document.getElementById('done'),duration=document.getElementById('duration');
-// Proefmomenten: later op Patricks exacte zinnen afstellen.
-const cuts=[0,4.5,16.8,26.3,34.0];
-function fmt(t){return Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0')}
-function frame(){let t=voice.currentTime;let idx=0;for(let i=0;i<cuts.length;i++)if(t>=cuts[i])idx=i;imgs.forEach((im,i)=>im.classList.toggle('active',i===idx));seek.value=t;clock.textContent=fmt(t)}
-voice.addEventListener('loadedmetadata',()=>{seek.max=voice.duration;duration.textContent=fmt(voice.duration)});
+const chapters=[
+ {title:'Hoofdstuk 1 · Een koude decemberdag',audio:'hoofdstuk1.mp3',first:0,cuts:[0,4.5,16.8,26.3,34.0]},
+ // Voorlopige wisselmomenten: na het beluisteren van hoofdstuk 2 nauwkeurig bijstellen.
+ {title:'Hoofdstuk 2 · Voor de bakkerij',audio:'Hoofdstuk 2.mp3',first:5,cuts:[0,13,31,52]}
+];
+const voice=document.getElementById('voice');
+const imgs=[...document.querySelectorAll('.scene img')];
+const start=document.getElementById('start');
+const controls=document.getElementById('controls');
+const toggle=document.getElementById('toggle');
+const seek=document.getElementById('seek');
+const clock=document.getElementById('clock');
+const done=document.getElementById('done');
+const duration=document.getElementById('duration');
+const note=document.getElementById('note');
+let chapter=0;
+function fmt(t){if(!Number.isFinite(t))return '0:00';return Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0')}
+function frame(){
+ const c=chapters[chapter],t=voice.currentTime||0;
+ let idx=0;
+ for(let i=0;i<c.cuts.length;i++)if(t>=c.cuts[i])idx=i;
+ const visible=c.first+idx;
+ imgs.forEach((im,i)=>im.classList.toggle('active',i===visible));
+ seek.value=t;clock.textContent=fmt(t);
+}
+function loadChapter(index,autoplay){
+ chapter=index;
+ const c=chapters[chapter];
+ note.textContent=c.title;
+ done.style.display='none';
+ voice.src=c.audio;
+ voice.load();
+ seek.value=0;clock.textContent='0:00';duration.textContent='0:00';
+ frame();
+ if(autoplay)voice.play().catch(()=>{toggle.textContent='▶';done.textContent='Tik op afspelen om verder te luisteren';done.style.display='block'});
+}
+voice.addEventListener('loadedmetadata',()=>{
+ if(Number.isFinite(voice.duration)){seek.max=voice.duration;duration.textContent=fmt(voice.duration)}
+});
 voice.addEventListener('timeupdate',frame);
-voice.addEventListener('ended',()=>{toggle.textContent='▶';done.style.display='block'});
+voice.addEventListener('ended',()=>{
+ if(chapter<chapters.length-1){loadChapter(chapter+1,true)}
+ else{toggle.textContent='▶';done.textContent='Einde hoofdstuk 2 ❄';done.style.display='block'}
+});
 voice.addEventListener('play',()=>{toggle.textContent='⏸';done.style.display='none'});
 voice.addEventListener('pause',()=>toggle.textContent='▶');
-start.addEventListener('click',()=>{voice.play().then(()=>{start.style.display='none';controls.style.display='flex'}).catch(()=>alert('Kan hoofdstuk1.mp3 niet afspelen. Controleer of de ZIP is uitgepakt.'))});
+voice.addEventListener('error',()=>{
+ done.textContent='Audiobestand niet gevonden: '+chapters[chapter].audio;
+ done.style.display='block';
+});
+start.addEventListener('click',()=>{
+ voice.play().then(()=>{start.style.display='none';controls.style.display='flex'})
+ .catch(()=>alert('Kan hoofdstuk1.mp3 niet afspelen. Controleer de bestandsnaam in GitHub.'));
+});
 toggle.addEventListener('click',()=>{if(voice.paused)voice.play();else voice.pause()});
 seek.addEventListener('input',()=>{voice.currentTime=Number(seek.value);frame()});
-document.getElementById('again').addEventListener('click',()=>{voice.currentTime=0;voice.play()});frame();
-</script></body></html>
+document.getElementById('again').addEventListener('click',()=>{voice.currentTime=0;voice.play()});
+frame();
+</script>
+</body>
+</html>
