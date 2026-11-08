@@ -35,6 +35,10 @@ html,body{margin:0;width:100%;height:100%;background:#07162b;color:#fff;font-fam
 <img src="beeld11.png" alt="Appie vindt de slinger en steentjes">
 <img src="beeld12.png" alt="Appie helpt het schip lossen">
 <img src="beeld13.png" alt="De kapitein geeft amandelen en Bikkel ontdekt een poesje">
+<img src="beeld14.png" alt="Meeuwen plunderen de kraam op de kerstmarkt">
+<img src="beeld15.png" alt="Appie en Bikkel komen de marktkoopman helpen">
+<img src="beeld16.png" alt="Appie verjaagt de meeuwen met zijn katapult">
+<img src="beeld17.png" alt="De marktkoopman beloont Appie met krenten en rozijnen">
 </div>
 <div class="shade"></div>
 <div class="note" id="note">Hoofdstuk 1 · Een koude decemberdag</div>
@@ -46,15 +50,17 @@ html,body{margin:0;width:100%;height:100%;background:#07162b;color:#fff;font-fam
 <span id="duration">0:42</span>
 <button id="again" title="Hoofdstuk opnieuw">↺</button>
 </div>
-<div class="done" id="done">Einde hoofdstuk 3 ❄</div>
+<div class="done" id="done">Einde hoofdstuk 4 ❄</div>
 <audio id="voice" preload="auto" src="hoofdstuk1.mp3"></audio>
 <script>
 const chapters=[
  {title:'Hoofdstuk 1 · Een koude decemberdag',audio:'hoofdstuk1.mp3',first:0,cuts:[0,4.5,16.8,26.3,34.0]},
  // Bestaande voorlopige wisselmomenten van hoofdstuk 2 zijn ongewijzigd.
  {title:'Hoofdstuk 2 · Voor de bakkerij',audio:'Hoofdstuk 2.mp3',first:5,cuts:[0,0.28,0.55,0.79],relative:true},
- // Voorlopige wisselmomenten voor hoofdstuk 3; later op Patricks stem afstemmen.
- {title:'Hoofdstuk 3 · Avontuur in de haven',audio:'Hoofdstuk 3.mp3',first:9,cuts:[0,0.38,0.62,0.79],relative:true}
+ // Bestaande voorlopige wisselmomenten van hoofdstuk 3 zijn ongewijzigd.
+ {title:'Hoofdstuk 3 · Avontuur in de haven',audio:'Hoofdstuk 3.mp3',first:9,cuts:[0,0.38,0.62,0.79],relative:true},
+ // Voorlopige wisselmomenten hoofdstuk 4; af te stellen op de gesproken zinnen.
+ {title:'Hoofdstuk 4 · Paniek op de markt',audio:'Hoofdstuk 4.mp3',first:13,cuts:[0,0.30,0.52,0.78],relative:true}
 ];
 const voice=document.getElementById('voice');
 const imgs=[...document.querySelectorAll('.scene img')];
@@ -93,7 +99,7 @@ voice.addEventListener('loadedmetadata',()=>{
 voice.addEventListener('timeupdate',frame);
 voice.addEventListener('ended',()=>{
  if(chapter<chapters.length-1){loadChapter(chapter+1,true)}
- else{toggle.textContent='▶';done.textContent='Einde hoofdstuk 3 ❄';done.style.display='block'}
+ else{toggle.textContent='▶';done.textContent='Einde hoofdstuk 4 ❄';done.style.display='block'}
 });
 voice.addEventListener('play',()=>{toggle.textContent='⏸';done.style.display='none'});
 voice.addEventListener('pause',()=>toggle.textContent='▶');
