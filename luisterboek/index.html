@@ -16,30 +16,12 @@ html,body{margin:0;width:100%;height:100%;background:#07162b;color:#fff;font-fam
 .controls button{background:none;color:white;border:0;font-size:22px;cursor:pointer}
 .controls input{width:min(35vw,280px);accent-color:#f6c56c}
 .note{position:absolute;top:12px;left:12px;background:#0009;padding:7px 11px;border-radius:8px;font-size:13px}
-.done{position:absolute;bottom:15%;width:100%;text-align:center;font-size:clamp(18px,3vw,30px);text-shadow:0 2px 9px black;display:none}
-@media(max-width:650px){.controls{font-size:11px;gap:5px}.controls input{width:23vw}.note{font-size:11px}}
+.done{position:absolute;bottom:15%;width:100%;text-align:center;font-size:clamp(18px,3vw,30px);text-shadow:0 2px 9px black;display:none;pointer-events:none}
+@media(max-width:650px){.controls{font-size:11px;gap:5px}.controls input{width:23vw}}
 </style>
 </head>
 <body>
-<div class="scene">
-<img src="beeld1.jpg" class="active" alt="Titelbeeld">
-<img src="beeld2.jpg" alt="Appie en Bikkel wandelen door Rotterdam">
-<img src="beeld3.jpg" alt="Appie gooit een sneeuwbal">
-<img src="beeld4.jpg" alt="Appie helpt een oude vrouw">
-<img src="beeld5.jpg" alt="De geur van de bakkerij lokt Appie en Bikkel">
-<img src="beeld6.png" alt="Appie en Bikkel luisteren bij de bakkerij">
-<img src="beeld7.png" alt="Anton mist ingrediënten voor het kerstbrood">
-<img src="beeld8.png" alt="Appie biedt zijn hulp aan">
-<img src="beeld9.png" alt="Anton geeft Appie het boodschappenlijstje">
-<img src="beeld10.png" alt="De kapitein is boos op matroos Jan">
-<img src="beeld11.png" alt="Appie vindt de slinger en steentjes">
-<img src="beeld12.png" alt="Appie helpt het schip lossen">
-<img src="beeld13.png" alt="De kapitein geeft amandelen en Bikkel ontdekt een poesje">
-<img src="beeld14.png" alt="Meeuwen plunderen de kraam op de kerstmarkt">
-<img src="beeld15.png" alt="Appie en Bikkel komen de marktkoopman helpen">
-<img src="beeld16.png" alt="Appie verjaagt de meeuwen met zijn katapult">
-<img src="beeld17.png" alt="De marktkoopman beloont Appie met krenten en rozijnen">
-</div>
+<div class="scene" id="scene"></div>
 <div class="shade"></div>
 <div class="note" id="note">Hoofdstuk 1 · Een koude decemberdag</div>
 <button class="start" id="start">▶ Start luisterboek</button>
@@ -47,23 +29,38 @@ html,body{margin:0;width:100%;height:100%;background:#07162b;color:#fff;font-fam
 <button id="toggle" aria-label="Afspelen of pauzeren">⏸</button>
 <span id="clock">0:00</span>
 <input id="seek" type="range" min="0" max="42" step="0.05" value="0" aria-label="Voortgang">
-<span id="duration">0:42</span>
+<span id="duration">0:00</span>
 <button id="again" title="Hoofdstuk opnieuw">↺</button>
 </div>
-<div class="done" id="done">Einde hoofdstuk 4 ❄</div>
+<div class="done" id="done"></div>
 <audio id="voice" preload="auto" src="hoofdstuk1.mp3"></audio>
 <script>
+// Alle bestanden staan naast deze index.html in de map luisterboek.
 const chapters=[
- {title:'Hoofdstuk 1 · Een koude decemberdag',audio:'hoofdstuk1.mp3',first:0,cuts:[0,4.5,16.8,26.3,34.0]},
- // Bestaande voorlopige wisselmomenten van hoofdstuk 2 zijn ongewijzigd.
- {title:'Hoofdstuk 2 · Voor de bakkerij',audio:'Hoofdstuk 2.mp3',first:5,cuts:[0,0.28,0.55,0.79],relative:true},
- // Bestaande voorlopige wisselmomenten van hoofdstuk 3 zijn ongewijzigd.
- {title:'Hoofdstuk 3 · Avontuur in de haven',audio:'Hoofdstuk 3.mp3',first:9,cuts:[0,0.38,0.62,0.79],relative:true},
- // Voorlopige wisselmomenten hoofdstuk 4; af te stellen op de gesproken zinnen.
- {title:'Hoofdstuk 4 · Paniek op de markt',audio:'Hoofdstuk 4.mp3',first:13,cuts:[0,0.30,0.52,0.78],relative:true}
+ {title:'Hoofdstuk 1 · Een koude decemberdag',audio:'hoofdstuk1.mp3',first:1,cuts:[0,4.5,16.8,26.3,34.0]},
+ {title:'Hoofdstuk 2 · Voor de bakkerij',audio:'Hoofdstuk 2.mp3',first:6,cuts:[0,0.28,0.55,0.79],relative:true},
+ {title:'Hoofdstuk 3 · Avontuur in de haven',audio:'Hoofdstuk 3.mp3',first:10,cuts:[0,0.38,0.62,0.79],relative:true},
+ {title:'Hoofdstuk 4 · Paniek op de markt',audio:'Hoofdstuk 4.mp3',first:14,cuts:[0,0.30,0.52,0.78],relative:true},
+ {title:'Hoofdstuk 5 · Muizen in de kaashandel',audio:'Hoofdstuk 5.mp3',first:18,cuts:[0,0.25,0.50,0.75],relative:true},
+ {title:'Hoofdstuk 6 · Verwarring in het pakhuis',audio:'Hoofdstuk 6.mp3',first:22,cuts:[0,0.25,0.50,0.75],relative:true},
+ {title:'Hoofdstuk 7 · Een vreemd goedje in de molen',audio:'Hoofdstuk 7.mp3',first:26,cuts:[0,0.20,0.40,0.60,0.80],relative:true},
+ {title:'Hoofdstuk 8 · Drukte in de winkel',audio:'Hoofdstuk 8.mp3',first:31,cuts:[0,0.25,0.50,0.75],relative:true},
+ {title:'Hoofdstuk 9 · Een bijzondere ontdekking',audio:'Hoofdstuk 9.mp3',first:35,cuts:[0,0.14,0.28,0.42,0.56,0.70,0.84],relative:true},
+ {title:'Hoofdstuk 10 · Het geheim van de kerststol',audio:'Hoofdstuk 10.mp3',first:42,cuts:[0,0.34,0.68],relative:true},
+ {title:'Hoofdstuk 11 · Het mooiste kerstfeest',audio:'Hoofdstuk 11.mp3',first:45,cuts:[0,0.25,0.50,0.75],relative:true}
 ];
+const scene=document.getElementById('scene');
+const images=[];
+for(let n=1;n<=48;n++){
+ const img=document.createElement('img');
+ img.src='beeld'+n+(n<=5?'.jpg':'.png');
+ img.alt='Illustratie '+n;
+ img.loading=n<=2?'eager':'lazy';
+ scene.appendChild(img);
+ images.push(img);
+}
+images[0].classList.add('active');
 const voice=document.getElementById('voice');
-const imgs=[...document.querySelectorAll('.scene img')];
 const start=document.getElementById('start');
 const controls=document.getElementById('controls');
 const toggle=document.getElementById('toggle');
@@ -72,25 +69,25 @@ const clock=document.getElementById('clock');
 const done=document.getElementById('done');
 const duration=document.getElementById('duration');
 const note=document.getElementById('note');
-let chapter=0;
+let chapter=0,finished=false;
 function fmt(t){if(!Number.isFinite(t))return '0:00';return Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0')}
+function show(n){images.forEach((im,i)=>im.classList.toggle('active',i===n-1))}
 function frame(){
+ if(finished)return;
  const c=chapters[chapter],t=voice.currentTime||0;
  let idx=0;
- for(let i=0;i<c.cuts.length;i++)if(t>=(c.relative && Number.isFinite(voice.duration) ? c.cuts[i]*voice.duration : c.cuts[i]))idx=i;
- const visible=c.first+idx;
- imgs.forEach((im,i)=>im.classList.toggle('active',i===visible));
+ for(let i=0;i<c.cuts.length;i++)if(t>=(c.relative&&Number.isFinite(voice.duration)?c.cuts[i]*voice.duration:c.cuts[i]))idx=i;
+ show(c.first+idx);
  seek.value=t;clock.textContent=fmt(t);
 }
 function loadChapter(index,autoplay){
- chapter=index;
+ chapter=index;finished=false;
  const c=chapters[chapter];
  note.textContent=c.title;
  done.style.display='none';
- voice.src=c.audio;
- voice.load();
+ voice.src=c.audio;voice.load();
  seek.value=0;clock.textContent='0:00';duration.textContent='0:00';
- frame();
+ show(c.first);
  if(autoplay)voice.play().catch(()=>{toggle.textContent='▶';done.textContent='Tik op afspelen om verder te luisteren';done.style.display='block'});
 }
 voice.addEventListener('loadedmetadata',()=>{
@@ -99,21 +96,18 @@ voice.addEventListener('loadedmetadata',()=>{
 voice.addEventListener('timeupdate',frame);
 voice.addEventListener('ended',()=>{
  if(chapter<chapters.length-1){loadChapter(chapter+1,true)}
- else{toggle.textContent='▶';done.textContent='Einde hoofdstuk 4 ❄';done.style.display='block'}
+ else{finished=true;show(48);note.textContent='Prettige Kerstdagen en een Gelukkig Nieuwjaar!';toggle.textContent='▶';done.textContent='';done.style.display='none';}
 });
 voice.addEventListener('play',()=>{toggle.textContent='⏸';done.style.display='none'});
 voice.addEventListener('pause',()=>toggle.textContent='▶');
-voice.addEventListener('error',()=>{
- done.textContent='Audiobestand niet gevonden: '+chapters[chapter].audio;
- done.style.display='block';
-});
+voice.addEventListener('error',()=>{done.textContent='Audiobestand niet gevonden: '+chapters[chapter].audio;done.style.display='block'});
 start.addEventListener('click',()=>{
  voice.play().then(()=>{start.style.display='none';controls.style.display='flex'})
  .catch(()=>alert('Kan hoofdstuk1.mp3 niet afspelen. Controleer de bestandsnaam in GitHub.'));
 });
-toggle.addEventListener('click',()=>{if(voice.paused)voice.play();else voice.pause()});
-seek.addEventListener('input',()=>{voice.currentTime=Number(seek.value);frame()});
-document.getElementById('again').addEventListener('click',()=>{voice.currentTime=0;voice.play()});
+toggle.addEventListener('click',()=>{if(finished){loadChapter(0,true)}else if(voice.paused)voice.play();else voice.pause()});
+seek.addEventListener('input',()=>{if(finished){finished=false;note.textContent=chapters[chapter].title}voice.currentTime=Number(seek.value);frame()});
+document.getElementById('again').addEventListener('click',()=>{if(finished){loadChapter(0,true)}else{voice.currentTime=0;voice.play()}});
 frame();
 </script>
 </body>
