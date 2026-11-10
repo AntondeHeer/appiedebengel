@@ -16,12 +16,61 @@ html,body{margin:0;width:100%;height:100%;background:#07162b;color:#fff;font-fam
 .controls button{background:none;color:white;border:0;font-size:22px;cursor:pointer}
 .controls input{width:min(35vw,280px);accent-color:#f6c56c}
 .note{position:absolute;top:12px;left:12px;background:#0009;padding:7px 11px;border-radius:8px;font-size:13px}
-.done{position:absolute;bottom:15%;width:100%;text-align:center;font-size:clamp(18px,3vw,30px);text-shadow:0 2px 9px black;display:none;pointer-events:none}
-@media(max-width:650px){.controls{font-size:11px;gap:5px}.controls input{width:23vw}}
+.done{position:absolute;bottom:15%;width:100%;text-align:center;font-size:clamp(18px,3vw,30px);text-shadow:0 2px 9px black;display:none}
+@media(max-width:650px){.controls{font-size:11px;gap:5px}.controls input{width:23vw}.note{font-size:11px}}
 </style>
 </head>
 <body>
-<div class="scene" id="scene"></div>
+<div class="scene">
+<img src="beeld1.jpg" alt="Beeld 1" class="active">
+<img src="beeld2.jpg" alt="Beeld 2">
+<img src="beeld3.jpg" alt="Beeld 3">
+<img src="beeld4.jpg" alt="Beeld 4">
+<img src="beeld5.jpg" alt="Beeld 5">
+<img src="beeld6.png" alt="Beeld 6">
+<img src="beeld7.png" alt="Beeld 7">
+<img src="beeld8.png" alt="Beeld 8">
+<img src="beeld9.png" alt="Beeld 9">
+<img src="beeld10.png" alt="Beeld 10">
+<img src="beeld11.png" alt="Beeld 11">
+<img src="beeld12.png" alt="Beeld 12">
+<img src="beeld13.png" alt="Beeld 13">
+<img src="beeld14.png" alt="Beeld 14">
+<img src="beeld15.png" alt="Beeld 15">
+<img src="beeld16.png" alt="Beeld 16">
+<img src="beeld17.png" alt="Beeld 17">
+<img src="beeld18.png" alt="Beeld 18">
+<img src="beeld19.png" alt="Beeld 19">
+<img src="beeld20.png" alt="Beeld 20">
+<img src="beeld21.png" alt="Beeld 21">
+<img src="beeld22.png" alt="Beeld 22">
+<img src="beeld23.png" alt="Beeld 23">
+<img src="beeld24.png" alt="Beeld 24">
+<img src="beeld25.png" alt="Beeld 25">
+<img src="beeld26.png" alt="Beeld 26">
+<img src="beeld27.png" alt="Beeld 27">
+<img src="beeld28.png" alt="Beeld 28">
+<img src="beeld29.png" alt="Beeld 29">
+<img src="beeld30.png" alt="Beeld 30">
+<img src="beeld31.png" alt="Beeld 31">
+<img src="beeld32.png" alt="Beeld 32">
+<img src="beeld33.png" alt="Beeld 33">
+<img src="beeld34.png" alt="Beeld 34">
+<img src="beeld35.png" alt="Beeld 35">
+<img src="beeld36.png" alt="Beeld 36">
+<img src="beeld37.png" alt="Beeld 37">
+<img src="beeld38.png" alt="Beeld 38">
+<img src="beeld39.png" alt="Beeld 39">
+<img src="beeld40.png" alt="Beeld 40">
+<img src="beeld41.png" alt="Beeld 41">
+<img src="beeld42.png" alt="Beeld 42">
+<img src="beeld43.png" alt="Beeld 43">
+<img src="beeld44.png" alt="Beeld 44">
+<img src="beeld45.png" alt="Beeld 45">
+<img src="beeld46.png" alt="Beeld 46">
+<img src="beeld47.png" alt="Beeld 47">
+<img src="beeld48.png" alt="Beeld 48">
+</div>
 <div class="shade"></div>
 <div class="note" id="note">Hoofdstuk 1 · Een koude decemberdag</div>
 <button class="start" id="start">▶ Start luisterboek</button>
@@ -29,40 +78,15 @@ html,body{margin:0;width:100%;height:100%;background:#07162b;color:#fff;font-fam
 <button id="toggle" aria-label="Afspelen of pauzeren">⏸</button>
 <span id="clock">0:00</span>
 <input id="seek" type="range" min="0" max="42" step="0.05" value="0" aria-label="Voortgang">
-<span id="duration">0:00</span>
+<span id="duration">0:42</span>
 <button id="again" title="Hoofdstuk opnieuw">↺</button>
 </div>
 <div class="done" id="done"></div>
 <audio id="voice" preload="auto" src="hoofdstuk1.mp3"></audio>
 <script>
-// Alle bestanden staan naast deze index.html in de map luisterboek.
-// Beeld 48 is de eindkaart en verschijnt pas NADAT hoofdstuk 11 is afgelopen.
-// Wisselmomenten vanaf hoofdstuk 5 zijn nog voorlopig; afstemmen op de stemopname.
-const chapters=[
- {title:'Hoofdstuk 1 · Een koude decemberdag',audio:'hoofdstuk1.mp3',first:1,cuts:[0,4.5,16.8,26.3,34.0]},
- {title:'Hoofdstuk 2 · Voor de bakkerij',audio:'Hoofdstuk 2.mp3',first:6,cuts:[0,0.28,0.55,0.79],relative:true},
- {title:'Hoofdstuk 3 · Avontuur in de haven',audio:'Hoofdstuk 3.mp3',first:10,cuts:[0,0.38,0.62,0.79],relative:true},
- {title:'Hoofdstuk 4 · Paniek op de markt',audio:'Hoofdstuk 4.mp3',first:14,cuts:[0,0.30,0.52,0.78],relative:true},
- {title:'Hoofdstuk 5 · Muizen in de kaashandel',audio:'Hoofdstuk 5.mp3',first:18,cuts:[0,0.25,0.50,0.75],relative:true},
- {title:'Hoofdstuk 6 · Verwarring in het pakhuis',audio:'Hoofdstuk 6.mp3',first:22,cuts:[0,0.25,0.50,0.75],relative:true},
- {title:'Hoofdstuk 7 · Een vreemd goedje in de molen',audio:'Hoofdstuk 7.mp3',first:26,cuts:[0,0.20,0.40,0.60,0.80],relative:true},
- {title:'Hoofdstuk 8 · Drukte in de winkel',audio:'Hoofdstuk 8.mp3',first:31,cuts:[0,0.25,0.50,0.75],relative:true},
- {title:'Hoofdstuk 9 · Een bijzondere ontdekking',audio:'Hoofdstuk 9.mp3',first:35,cuts:[0,0.14,0.28,0.42,0.56,0.70,0.84],relative:true},
- {title:'Hoofdstuk 10 · Het geheim van de kerststol',audio:'Hoofdstuk 10.mp3',first:42,cuts:[0,0.34,0.68],relative:true},
- {title:'Hoofdstuk 11 · Het mooiste kerstfeest',audio:'Hoofdstuk 11.mp3',first:45,cuts:[0,0.34,0.68],relative:true}
-];
-const scene=document.getElementById('scene');
-const images=[];
-for(let n=1;n<=48;n++){
- const img=document.createElement('img');
- img.src='beeld'+n+(n<=5?'.jpg':'.png');
- img.alt='Illustratie '+n;
- img.loading=n<=2?'eager':'lazy';
- scene.appendChild(img);
- images.push(img);
-}
-images[0].classList.add('active');
+const chapters=[{"title": "Hoofdstuk 1 · Een koude decemberdag", "audio": "hoofdstuk1.mp3", "first": 0, "last": 4, "cuts": [0, 4.5, 16.8, 26.3, 34.0], "relative": false}, {"title": "Hoofdstuk 2 · Voor de bakkerij", "audio": "Hoofdstuk 2.mp3", "first": 5, "last": 8, "cuts": [0, 0.28, 0.55, 0.79], "relative": true}, {"title": "Hoofdstuk 3 · Avontuur in de haven", "audio": "Hoofdstuk 3.mp3", "first": 9, "last": 12, "cuts": [0, 0.38, 0.62, 0.79], "relative": true}, {"title": "Hoofdstuk 4 · Paniek op de markt", "audio": "Hoofdstuk 4.mp3", "first": 13, "last": 16, "cuts": [0, 0.3, 0.52, 0.78], "relative": true}, {"title": "Hoofdstuk 5 · Muizen in de kaashandel", "audio": "Hoofdstuk 5.mp3", "first": 17, "last": 19, "cuts": [0, 0.34, 0.68], "relative": true}, {"title": "Hoofdstuk 6 · Verwarring in het pakhuis", "audio": "Hoofdstuk 6.mp3", "first": 20, "last": 23, "cuts": [0, 0.25, 0.5, 0.75], "relative": true}, {"title": "Hoofdstuk 7 · Een vreemd goedje in de molen", "audio": "Hoofdstuk 7.mp3", "first": 24, "last": 27, "cuts": [0, 0.25, 0.5, 0.75], "relative": true}, {"title": "Hoofdstuk 8 · Drukte in de winkel", "audio": "Hoofdstuk 8.mp3", "first": 28, "last": 32, "cuts": [0, 0.2, 0.4, 0.6, 0.8], "relative": true}, {"title": "Hoofdstuk 9 · Een bijzondere ontdekking", "audio": "Hoofdstuk 9.mp3", "first": 33, "last": 38, "cuts": [0, 0.16666666666666666, 0.3333333333333333, 0.5, 0.6666666666666666, 0.8333333333333334], "relative": true}, {"title": "Hoofdstuk 10 · Het geheim van de kerststol", "audio": "Hoofdstuk 10.mp3", "first": 39, "last": 41, "cuts": [0, 0.3333333333333333, 0.6666666666666666], "relative": true}, {"title": "Hoofdstuk 11 · Het mooiste kerstfeest", "audio": "Hoofdstuk 11.mp3", "first": 42, "last": 46, "cuts": [0, 0.2, 0.4, 0.6, 0.8], "relative": true}];
 const voice=document.getElementById('voice');
+const imgs=[...document.querySelectorAll('.scene img')];
 const start=document.getElementById('start');
 const controls=document.getElementById('controls');
 const toggle=document.getElementById('toggle');
@@ -73,26 +97,25 @@ const duration=document.getElementById('duration');
 const note=document.getElementById('note');
 let chapter=0,finished=false;
 function fmt(t){if(!Number.isFinite(t))return '0:00';return Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0')}
-function show(n){images.forEach((im,i)=>im.classList.toggle('active',i===n-1))}
-// Per hoofdstuk een harde grens: nooit alvast een beeld van het volgende hoofdstuk.
-const chapterRanges=[[1,5],[6,9],[10,13],[14,17],[18,21],[22,25],[26,30],[31,34],[35,41],[42,44],[45,47]];
+function showImage(index){imgs.forEach((im,i)=>im.classList.toggle('active',i===index))}
 function frame(){
  if(finished)return;
  const c=chapters[chapter],t=voice.currentTime||0;
  let idx=0;
- for(let i=0;i<c.cuts.length;i++)if(t>=(c.relative&&Number.isFinite(voice.duration)?c.cuts[i]*voice.duration:c.cuts[i]))idx=i;
- const [minImage,maxImage]=chapterRanges[chapter];
- show(Math.max(minImage,Math.min(maxImage,c.first+idx)));
+ for(let i=0;i<c.cuts.length;i++)if(t>=(c.relative && Number.isFinite(voice.duration) ? c.cuts[i]*voice.duration : c.cuts[i]))idx=i;
+ // Een beeld mag nooit buiten de grenzen van het huidige hoofdstuk vallen.
+ showImage(Math.min(c.last,c.first+idx));
  seek.value=t;clock.textContent=fmt(t);
 }
 function loadChapter(index,autoplay){
- chapter=index;finished=false;
+ finished=false;chapter=index;
  const c=chapters[chapter];
  note.textContent=c.title;
  done.style.display='none';
- voice.src=c.audio;voice.load();
+ voice.src=c.audio;
+ voice.load();
  seek.value=0;clock.textContent='0:00';duration.textContent='0:00';
- show(chapterRanges[chapter][0]);
+ showImage(c.first);
  if(autoplay)voice.play().catch(()=>{toggle.textContent='▶';done.textContent='Tik op afspelen om verder te luisteren';done.style.display='block'});
 }
 voice.addEventListener('loadedmetadata',()=>{
@@ -101,18 +124,31 @@ voice.addEventListener('loadedmetadata',()=>{
 voice.addEventListener('timeupdate',frame);
 voice.addEventListener('ended',()=>{
  if(chapter<chapters.length-1){loadChapter(chapter+1,true)}
- else{finished=true;show(48);note.textContent='Prettige Kerstdagen en een Gelukkig Nieuwjaar!';toggle.textContent='▶';done.textContent='';done.style.display='none';}
+ else{
+  finished=true;showImage(47); // beeld48.png: kerstgroet, na het verhaal
+  note.textContent='Prettige Kerstdagen en een Gelukkig Nieuwjaar!';
+  toggle.textContent='▶';done.style.display='none';
+ }
 });
 voice.addEventListener('play',()=>{toggle.textContent='⏸';done.style.display='none'});
 voice.addEventListener('pause',()=>toggle.textContent='▶');
-voice.addEventListener('error',()=>{done.textContent='Audiobestand niet gevonden: '+chapters[chapter].audio;done.style.display='block'});
+voice.addEventListener('error',()=>{
+ done.textContent='Audiobestand niet gevonden: '+chapters[chapter].audio;
+ done.style.display='block';
+});
 start.addEventListener('click',()=>{
  voice.play().then(()=>{start.style.display='none';controls.style.display='flex'})
  .catch(()=>alert('Kan hoofdstuk1.mp3 niet afspelen. Controleer de bestandsnaam in GitHub.'));
 });
-toggle.addEventListener('click',()=>{if(finished){loadChapter(0,true)}else if(voice.paused)voice.play();else voice.pause()});
-seek.addEventListener('input',()=>{if(finished){finished=false;note.textContent=chapters[chapter].title}voice.currentTime=Number(seek.value);frame()});
-document.getElementById('again').addEventListener('click',()=>{if(finished){loadChapter(0,true)}else{voice.currentTime=0;voice.play()}});
+toggle.addEventListener('click',()=>{
+ if(finished){loadChapter(0,true);return}
+ if(voice.paused)voice.play();else voice.pause()
+});
+seek.addEventListener('input',()=>{if(finished)return;voice.currentTime=Number(seek.value);frame()});
+document.getElementById('again').addEventListener('click',()=>{
+ if(finished){loadChapter(0,true);return}
+ voice.currentTime=0;voice.play()
+});
 frame();
 </script>
 </body>
