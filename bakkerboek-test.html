@@ -216,8 +216,8 @@ document.getElementById('signup-form').addEventListener('submit',async e=>{
   const btn=document.getElementById('signup-submit');
   const naam=document.getElementById('signup-name').value.trim().replace(/\s+/g,' ');
   if(naam.length<3||naam.length>80||!naam.includes(' ')){statusEl.textContent='Vul je voor- en achternaam in.';return;}
-   if(!document.querySelector('input[name="signup-ronde"]:checked')){statusEl.textContent='Kies eerst de Adventronde of Kerstronde.';return;}
-   const ronde=document.querySelector('input[name="signup-ronde"]:checked').value;
+   const ronde=bepaalRonde();
+   if(!ronde){statusEl.textContent='De inschrijving is momenteel gesloten.';return;}
   if(!document.getElementById('signup-consent').checked){statusEl.textContent='Vink eerst je toestemming aan.';return;}
   if(!window.turnstile||signupWidgetId===null){statusEl.textContent='De beveiligingscontrole is nog niet klaar.';return;}
   const turnstileToken=window.turnstile.getResponse(signupWidgetId);
