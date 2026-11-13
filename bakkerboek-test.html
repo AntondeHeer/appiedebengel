@@ -248,6 +248,8 @@ function toonHulpbakkersPagina(){
   const el=document.getElementById('helpers-list');
   el.replaceChildren();
   for(const [ronde,titel] of [['advent','🕯 Adventronde'],['kerst','🎁 Kerstronde']]){
+    // Kerstronde pas vanaf 23 december 2026 in het openbare boek tonen.
+    if(ronde==='kerst' && nederlandseDatum()<'2026-12-23')continue;
     const h=document.createElement('h3');h.textContent=titel;el.append(h);
     const all=helpersData.filter(x=>x.ronde===ronde).slice(0,50);
     const begin=helpersPage*HELPERS_PER_ROUND_PER_PAGE;
