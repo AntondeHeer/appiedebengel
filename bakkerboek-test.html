@@ -150,7 +150,7 @@ document.getElementById('rules-toggle').addEventListener('click',()=>{const el=d
 const TURNSTILE_SITE_KEY = "0x4AAAAAAF-vAd66cTedzSCZ";
 const INSCHRIJF_URL = "https://strsssxpnrtkogwsjtme.supabase.co/functions/v1/inschrijven-hulpbakker";
 // Als Supabase om een apikey vraagt: zet hier de openbare publishable key.
-const SUPABASE_PUBLISHABLE_KEY = "";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_LBBxWVQxeMj5Aqt0b4smdA_GpMhoFeS";
 let signupWidgetId = null;
 const overlay = document.getElementById('signup-overlay');
 const statusEl = document.getElementById('signup-status');
@@ -193,7 +193,7 @@ document.getElementById('signup-form').addEventListener('submit',async e=>{
 // Openbare publishable/anon key invullen om de leesfunctie te kunnen gebruiken.
 // Gebruik hier NOOIT een Supabase secret of service_role key.
 const HELPERS_SUPABASE_URL = 'https://strsssxpnrtkogwsjtme.supabase.co';
-const HELPERS_PUBLIC_KEY = ''; // Supabase > Project Settings > API Keys > Publishable key
+const HELPERS_PUBLIC_KEY = 'sb_publishable_LBBxWVQxeMj5Aqt0b4smdA_GpMhoFeS'; // Supabase > Project Settings > API Keys > Publishable key
 async function laadHulpbakkers(){
   const el=document.getElementById('helpers-list');
   if(!HELPERS_PUBLIC_KEY){el.innerHTML='<p class="helpers-empty">De namenlijst wordt binnenkort zichtbaar.</p>';return;}
