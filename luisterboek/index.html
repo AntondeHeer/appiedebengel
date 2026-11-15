@@ -98,6 +98,27 @@ const chapters=[
  {title:'Hoofdstuk 10 · Het geheim van de kerststol',audio:'Hoofdstuk 10.mp3',images:[40,41,42],cuts:[0,1/3,2/3],relative:true},
  {title:'Hoofdstuk 11 · Het mooiste kerstfeest',audio:'Hoofdstuk 11.mp3',images:[43,44,45,46,47],cuts:[0,12,20,29,36],relative:false}
 ];
+
+// Anonieme statistieken: maximaal één start en één voltooiing per pagina-opening.
+const APPIE_STATS_URL='https://strsssxpnrtkogwsjtme.supabase.co/rest/v1/rpc/appie_tel';
+const APPIE_STATS_KEY='sb_publishable_LBBxWVQxeMj5Aqt0b4smdA_GpMhoFeS';
+let appieStartGeteld=false,appieEindeGeteld=false;
+function telLuisterboek(gebeurtenis){
+  if(gebeurtenis==='gestart'){
+    if(appieStartGeteld)return;
+    appieStartGeteld=true;
+  }else if(gebeurtenis==='voltooid'){
+    if(appieEindeGeteld)return;
+    appieEindeGeteld=true;
+  }else return;
+  fetch(APPIE_STATS_URL,{
+    method:'POST',
+    headers:{'apikey':APPIE_STATS_KEY,'Content-Type':'application/json'},
+    body:JSON.stringify({p_onderdeel:'luisterboek',p_gebeurtenis:gebeurtenis}),
+    keepalive:true
+  }).catch(()=>{}); // Problemen met statistieken mogen luisteren niet onderbreken.
+}
+
 const voice=document.getElementById('voice');
 const imgs=[...document.querySelectorAll('.scene img')];
 const imageByNumber=new Map(imgs.map(im=>[im.getAttribute('src').match(/beeld(.+)\.(?:png|jpg)$/)[1],im]));
@@ -173,7 +194,7 @@ voice.addEventListener('error',()=>{
  done.style.display='block';
 });
 start.addEventListener('click',()=>{
- voice.play().then(()=>{start.style.display='none';controls.style.display='flex'})
+ voice.play().then(()=>{telLuisterboek('gestart');start.style.display='none';controls.style.display='flex'})
  .catch(()=>alert('Kan hoofdstuk1.mp3 niet afspelen. Controleer de bestandsnaam in GitHub.'));
 });
 toggle.addEventListener('click',()=>{
