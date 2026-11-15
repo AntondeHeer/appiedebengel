@@ -1,38 +1,27 @@
 <!doctype html>
 <html lang="nl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#061737">
-  <meta name="description" content="Appie en het Geheim van de Kerststol: speel het avontuur of luister naar het verhaal.">
-  <title>Appie en het Geheim van de Kerststol</title>
-  <style>
-    * { box-sizing: border-box; }
-    html { background: #061737; }
-    body { margin: 0; min-height: 100vh; color: #fff; font-family: Georgia, serif; text-align: center;
-      background: radial-gradient(ellipse at 50% 20%, #164a85 0%, #071c40 55%, #020b20 100%); }
-    main { width: min(100% - 28px, 660px); margin: 0 auto; padding: 24px 0 42px; }
-    .poster { display: block; width: min(100%, 520px); height: auto; margin: 0 auto; border-radius: 8px;
-      box-shadow: 0 14px 42px #0009; }
-    .intro { margin: 26px 0 10px; font-size: clamp(1.1rem, 3vw, 1.45rem); color: #fff0c7; }
-    .buttons { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-    .choice { display: block; width: min(100%, 470px); border-radius: 14px; transition: transform .15s ease, filter .15s ease; }
-    .choice img { display: block; width: 100%; height: auto; }
-    .choice:hover { transform: scale(1.035); filter: brightness(1.08); }
-    .choice:focus-visible { outline: 3px solid #ffdf70; outline-offset: 4px; }
-    .footer { font: .85rem/1.5 Arial, sans-serif; opacity: .75; margin-top: 22px; }
-    @media (prefers-reduced-motion: reduce) { .choice { transition: none; } }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Appie en het Geheim van de Kerststol</title>
+<link rel="apple-touch-icon" sizes="180x180" href="/appie-icon-180.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/appie-icon-512.png">
+<meta name="theme-color" content="#061532">
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:#061532}body{display:grid;place-items:center;overflow:hidden;font-family:Georgia,serif}
+.scene{position:relative;width:min(100vw,177.68vh);aspect-ratio:1672/941;background:url('appie-achtergrond.png') center/100% 100% no-repeat;overflow:hidden}
+.choice{position:absolute;left:55%;width:40%;display:block;line-height:0;transition:transform .18s ease,filter .18s ease;filter:drop-shadow(0 5px 8px #0007)}
+.choice img{width:100%;height:auto;display:block}.choice:hover,.choice:focus-visible{transform:scale(1.045);filter:drop-shadow(0 8px 12px #000b)}.choice:focus-visible{outline:3px solid #fff0ad;border-radius:12px}
+.game{top:37%}.audio{top:62%}
+@media(max-aspect-ratio:3/4){body{display:flex;justify-content:center;align-items:stretch}.scene{width:100vw;height:100dvh;aspect-ratio:auto;background-size:100% auto;background-position:center top;background-color:#061532}.choice{left:12%;width:76%}.game{top:auto;bottom:22%}.audio{top:auto;bottom:5%}}
+@media(max-aspect-ratio:3/4) and (max-height:600px){.choice{width:57%;left:21%}.game{bottom:21%}.audio{bottom:2%}}
+@media(prefers-reduced-motion:reduce){.choice{transition:none}}
+</style>
 </head>
 <body>
-  <main>
-    <img class="poster" src="poster.png" alt="Poster van Appie en Bikkel in winters Rotterdam, met de titel Appie en het Geheim van de Kerststol">
-    <p class="intro">Kies jouw avontuur!</p>
-    <nav class="buttons" aria-label="Kies spel of luisterboek">
-      <a class="choice" href="/spel.html" aria-label="Speel het spel"><img src="knop-spel.png" alt="Speel het Spel"></a>
-      <a class="choice" href="/luisterboek/" aria-label="Luister naar het verhaal"><img src="knop-luisterboek.png" alt="Luister naar het Verhaal"></a>
-    </nav>
-    <p class="footer">Een avontuur van Banketbakkerij Van der Heijden</p>
-  </main>
+<main class="scene" aria-label="Kies jouw Appie-avontuur">
+<a class="choice game" href="/spel.html" aria-label="Speel het spel"><img src="/knop-spel.png" alt="Speel het Spel"></a>
+<a class="choice audio" href="/luisterboek/" aria-label="Luister naar het verhaal"><img src="/knop-luisterboek.png" alt="Luister naar het Verhaal"></a>
+</main>
 </body>
 </html>
