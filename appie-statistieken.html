@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>Appie & Bikkel — Statistieken</title>
+<style>
+:root{color-scheme:dark;font-family:Georgia,serif}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#263e58,#0b1223 65%);color:#f7e5bd;padding:28px 16px}main{max-width:940px;margin:auto}h1{font-size:clamp(27px,5vw,43px);margin:0 0 8px;color:#ffe1a1}p{color:#d4c8ad;line-height:1.5}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:22px 0}button{background:#5b371e;color:#ffebb9;border:1px solid #d6a859;border-radius:10px;padding:10px 16px;font:inherit;cursor:pointer}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}.card{background:#1b2840dd;border:1px solid #967444;border-radius:14px;padding:20px;box-shadow:0 8px 22px #0004}.card h2{font-size:17px;font-weight:normal;margin:0 0 10px;color:#e9c783}.num{font:700 clamp(31px,5vw,48px) Georgia,serif;color:#fff2d0}.sub{font-size:13px;color:#c4bbad;margin-top:6px}h3{margin:30px 0 12px}table{width:100%;border-collapse:collapse;background:#1b2840cc;border-radius:12px;overflow:hidden}th,td{text-align:left;padding:13px 12px;border-bottom:1px solid #ffffff19}td:not(:first-child),th:not(:first-child){text-align:right}#status{font-size:14px}footer{font-size:13px;margin-top:28px;color:#c7baa1}
+</style>
+</head>
+<body><main>
+<h1>🎄 Appie & Bikkel</h1>
+<p>Statistieken van het spel en het luisterboek</p>
+<div class="top"><span id="status" role="status">Statistieken laden…</span><button id="refresh" type="button">↻ Vernieuwen</button></div>
+<section class="cards" aria-label="Overzicht">
+<div class="card"><h2>🎮 Spel gestart</h2><div class="num" id="gameTotal">—</div><div class="sub" id="gameToday">Vandaag: —</div></div>
+<div class="card"><h2>🏆 Spel uitgespeeld</h2><div class="num" id="gameFinished">—</div><div class="sub" id="gameFinishedToday">Vandaag: —</div></div>
+<div class="card"><h2>🎧 Luisterboek gestart</h2><div class="num" id="audioTotal">—</div><div class="sub" id="audioToday">Vandaag: —</div></div>
+<div class="card"><h2>📖 Luisterboek voltooid</h2><div class="num" id="audioFinished">—</div><div class="sub" id="audioFinishedToday">Vandaag: —</div></div>
+</section>
+<h3>Verdeling van de spelstarts</h3>
+<table><thead><tr><th>Versie</th><th>Vandaag</th><th>Totaal</th></tr></thead><tbody><tr><td>💻 Computer</td><td id="desktopToday">—</td><td id="desktopTotal">—</td></tr><tr><td>📱 Mobiel</td><td id="mobileToday">—</td><td id="mobileTotal">—</td></tr></tbody></table>
+<footer>De cijfers tellen gebeurtenissen, geen unieke bezoekers. Herhaald starten kan meerdere keren meetellen. Alleen registraties sinds het installeren van de tellers zijn zichtbaar.</footer>
+</main>
+<script>
+(()=>{'use strict';
+const URL='https://strsssxpnrtkogwsjtme.supabase.co';
+const KEY='sb_publishable_LBBxWVQxeMj5Aqt0b4smdA_GpMhoFeS';
+const $=id=>document.getElementById(id);
+const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Amsterdam',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+function count(rows,parts,events,onlyToday){return rows.filter(r=>parts.includes(r.onderdeel)&&events.includes(r.gebeurtenis)&&(!onlyToday||r.dag===today())).reduce((sum,r)=>sum+Number(r.aantal||0),0)}
+function render(rows){
+ const game=['spel_desktop','spel_mobiel'],audio=['luisterboek'];
+ const cards=[['gameTotal','gameToday',game,['gestart']],['gameFinished','gameFinishedToday',game,['uitgespeeld','voltooid','afgerond']],['audioTotal','audioToday',audio,['gestart']],['audioFinished','audioFinishedToday',audio,['voltooid','afgerond','uitgespeeld']]];
+ for(const [totalId,todayId,parts,events] of cards){$(totalId).textContent=count(rows,parts,events,false).toLocaleString('nl-NL');$(todayId).textContent='Vandaag: '+count(rows,parts,events,true).toLocaleString('nl-NL')}
+ for(const [part,dayId,totalId] of [['spel_desktop','desktopToday','desktopTotal'],['spel_mobiel','mobileToday','mobileTotal']]){$(dayId).textContent=count(rows,[part],['gestart'],true).toLocaleString('nl-NL');$(totalId).textContent=count(rows,[part],['gestart'],false).toLocaleString('nl-NL')}
+}
+async function load(){const b=$('refresh');b.disabled=true;$('status').textContent='Statistieken laden…';try{const response=await fetch(URL+'/rest/v1/rpc/appie_dashboard_overzicht',{method:'POST',headers:{'apikey':KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json'},body:'{}',cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);const rows=await response.json();if(!Array.isArray(rows))throw new Error('Ongeldig antwoord');render(rows);$('status').textContent='Bijgewerkt: '+new Intl.DateTimeFormat('nl-NL',{timeZone:'Europe/Amsterdam',hour:'2-digit',minute:'2-digit'}).format(new Date())}catch(err){$('status').textContent='Kon statistieken niet laden ('+err.message+'). Controleer of de SQL-stap is uitgevoerd.'}finally{b.disabled=false}}
+$('refresh').addEventListener('click',load);load();
+})();
+</script></body></html>
