@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#061737">
+  <meta name="description" content="Appie en het Geheim van de Kerststol: speel het avontuur of luister naar het verhaal.">
+  <title>Appie en het Geheim van de Kerststol</title>
+  <style>
+    * { box-sizing: border-box; }
+    html { background: #061737; }
+    body { margin: 0; min-height: 100vh; color: #fff; font-family: Georgia, serif; text-align: center;
+      background: radial-gradient(ellipse at 50% 20%, #164a85 0%, #071c40 55%, #020b20 100%); }
+    main { width: min(100% - 28px, 660px); margin: 0 auto; padding: 24px 0 42px; }
+    .poster { display: block; width: min(100%, 520px); height: auto; margin: 0 auto; border-radius: 8px;
+      box-shadow: 0 14px 42px #0009; }
+    .intro { margin: 26px 0 10px; font-size: clamp(1.1rem, 3vw, 1.45rem); color: #fff0c7; }
+    .buttons { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .choice { display: block; width: min(100%, 470px); border-radius: 14px; transition: transform .15s ease, filter .15s ease; }
+    .choice img { display: block; width: 100%; height: auto; }
+    .choice:hover { transform: scale(1.035); filter: brightness(1.08); }
+    .choice:focus-visible { outline: 3px solid #ffdf70; outline-offset: 4px; }
+    .footer { font: .85rem/1.5 Arial, sans-serif; opacity: .75; margin-top: 22px; }
+    @media (prefers-reduced-motion: reduce) { .choice { transition: none; } }
+  </style>
+</head>
+<body>
+  <main>
+    <img class="poster" src="poster.png" alt="Poster van Appie en Bikkel in winters Rotterdam, met de titel Appie en het Geheim van de Kerststol">
+    <p class="intro">Kies jouw avontuur!</p>
+    <nav class="buttons" aria-label="Kies spel of luisterboek">
+      <a class="choice" href="/spel.html" aria-label="Speel het spel"><img src="knop-spel.png" alt="Speel het Spel"></a>
+      <a class="choice" href="/luisterboek/" aria-label="Luister naar het verhaal"><img src="knop-luisterboek.png" alt="Luister naar het Verhaal"></a>
+    </nav>
+    <p class="footer">Een avontuur van Banketbakkerij Van der Heijden</p>
+  </main>
+</body>
+</html>
